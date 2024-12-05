@@ -1,0 +1,65 @@
+.stAppHeader, 
+.st-emotion-cache-qdbtli {
+    background-color: #2f2f2f;
+}
+
+.stApp {
+    background-color: #212121;
+}
+
+.user-message {
+    background-color: #d2f5ed; /* Fundo para mensagens do usuário */
+    padding: 10px;
+    border-radius: 10px;
+    margin: 5px 0;
+}
+
+.bot-message {
+    background-color: #ffe1c6f3; /* Fundo para mensagens do bot */
+    padding: 10px;
+    border-radius: 10px;
+    margin: 5px 0;
+}
+
+#ca2885be, #f9731694 {
+    color: #ffe2c6;
+}
+
+.st-emotion-cache-1rsyhoq {
+    color: #474747;
+}
+
+h4 {
+    color: #464646;
+}
+
+.st-emotion-cache-jkfxgf {
+    color: #ffe2c6;    
+}
+
+.st-emotion-cache-1vt4y43 {
+    background-color:#90b800;
+    color:#fff;
+}
+
+.st-emotion-cache-1vt4y43:hover {
+    background-color:#175200;
+    color:#fff;
+}
+
+.stVerticalBlock {
+    align-items: center;
+}
+
+.stForm {
+    flex: auto;
+    width: 350px;
+    background-color: #3a3a3a75;
+    box-shadow: #464646 1px 1px 6px;
+}
+
+.stAlertContainer {
+    display: flex;
+    text-align: center;
+    background-color: #e28255;
+}
