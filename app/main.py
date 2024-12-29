@@ -17,71 +17,39 @@ with open("app/style.css") as file:
 # Recuperando o Hash da senha de autenticação
 password_hash = config('PASSWORD_HASH')
 
-# Função para fazer a autenticação.
-def authenticate(password):
-    return hash_password(password) == password_hash
 
-# Controle de sessão para navegação
-if "authenticated" not in st.session_state:
-    st.session_state.authenticated = False
+# Cria uma sessão para armazenar a conversa enquanto o app está aberto.
+if "messages" not in st.session_state:
+    st.session_state.messages = [
+        {"role": "system", "content": "Você é um super ajudante que pode responder amigavelmente qualquer pessoa."}
+    ]
 
+st.title("🤖 Fábio-GPT")
+st.write("Baseado no Groq, um DSL que permite a construção de chatbots.")
 
-# Página inicial (página de autenticação)
-if not st.session_state.authenticated:
-    st.title("🤖 Fábio GPT - Login")
-    st.markdown("#### Solicite a senha para acessar a aplicação.")
-    st.markdown(
-        '[Clique aqui para solicitar acesso](mailto:fabio.silvapedro@gmail.com?subject=Solicitação%20de%20senha%20para%20IA)'
-    )
-    
-    # Formulário de senha.
-    with st.form("login_form"):
-        password = st.text_input("Senha", type="password")
-        submit_button = st.form_submit_button("Entrar")
-    
-    # Validação da senha.
-    if submit_button:
-        if authenticate(password):
-            st.session_state.authenticated = True
-            st.success("Autenticado com sucesso! Redirecionando...")
-            st.rerun()
-        else:
-            st.error("Senha incorreta! Tente novamente.")
+# Contêiner rolável para exibir as mensagens do chat.
+with st.container():
+    for msg in st.session_state.messages:
+        if msg["role"] == "user":
+            st.markdown(f'<div class="user-message">🧑 <strong>Usuário:</strong> {msg["content"]}</div>', unsafe_allow_html=True)
+        elif msg["role"] == "assistant":
+            st.markdown(f'<div class="bot-message">🤖 <strong>Bot:</strong> {msg["content"]}</div>', unsafe_allow_html=True)
 
-else:
+# Caixa de perguntas do usuário.
+prompt = st.chat_input("Digite algo para conversar com o bot:")
+if prompt:
+    # Adiciona a mensagem do usuário ao contexto
+    st.session_state.messages.append({"role": "user", "content": prompt})
 
-    # Cria uma sessão para armazenar a conversa enquanto o app está aberto.
-    if "messages" not in st.session_state:
-        st.session_state.messages = [
-            {"role": "system", "content": "Você é um super ajudante que pode responder amigavelmente qualquer pessoa."}
-        ]
+    # Exibe a mensagem do usuário na interface
+    st.markdown(f'<div class="user-message">🧑 <strong>Usuário:</strong> {prompt}</div>', unsafe_allow_html=True)
 
-    st.title("🤖 Fábio-GPT")
-    st.write("Baseado no Groq, um DSL que permite a construção de chatbots.")
+    # Obtém a resposta do bot
+    bot_response = get_chat_response(st.session_state.messages)
 
-    # Contêiner rolável para exibir as mensagens do chat.
-    with st.container():
-        for msg in st.session_state.messages:
-            if msg["role"] == "user":
-                st.markdown(f'<div class="user-message">🧑 <strong>Usuário:</strong> {msg["content"]}</div>', unsafe_allow_html=True)
-            elif msg["role"] == "assistant":
-                st.markdown(f'<div class="bot-message">🤖 <strong>Bot:</strong> {msg["content"]}</div>', unsafe_allow_html=True)
+    # Adiciona a resposta do bot ao contexto
+    st.session_state.messages.append({"role": "assistant", "content": bot_response})
 
-    # Caixa de perguntas do usuário.
-    prompt = st.chat_input("Digite algo para conversar com o bot:")
-    if prompt:
-        # Adiciona a mensagem do usuário ao contexto
-        st.session_state.messages.append({"role": "user", "content": prompt})
-
-        # Exibe a mensagem do usuário na interface
-        st.markdown(f'<div class="user-message">🧑 <strong>Usuário:</strong> {prompt}</div>', unsafe_allow_html=True)
-
-        # Obtém a resposta do bot
-        bot_response = get_chat_response(st.session_state.messages)
-
-        # Adiciona a resposta do bot ao contexto
-        st.session_state.messages.append({"role": "assistant", "content": bot_response})
-
-        # Exibe a resposta do bot na interface
-        st.markdown(f'<div class="bot-message">🤖 <strong>Bot:</strong> {bot_response}</div>', unsafe_allow_html=True)
+    # Exibe a resposta do bot na interface
+    st.markdown(f'<div class="bot-message">🤖 <strong>Bot:</strong> {bot_response}</div>', unsafe_allow_html=True)
 
