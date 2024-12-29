@@ -1,5 +1,6 @@
 __pycache__
 .env
+.env_exemple.txt
 .venv
 .vscode
 .TODO
