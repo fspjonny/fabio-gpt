@@ -1,7 +1,6 @@
 import streamlit as st
 from utils import hash_password
 from ia_module import get_chat_response
-from decouple import config
 
 # Configurações da página
 st.set_page_config(
@@ -13,10 +12,6 @@ st.set_page_config(
 # Estilos personalizados usando CSS
 with open("app/style.css") as file:
     st.markdown(f"<style>{file.read()}</style>", unsafe_allow_html=True)
-
-# Recuperando o Hash da senha de autenticação
-password_hash = config('PASSWORD_HASH')
-
 
 # Cria uma sessão para armazenar a conversa enquanto o app está aberto.
 if "messages" not in st.session_state:
@@ -52,4 +47,3 @@ if prompt:
 
     # Exibe a resposta do bot na interface
     st.markdown(f'<div class="bot-message">🤖 <strong>Bot:</strong> {bot_response}</div>', unsafe_allow_html=True)
-
