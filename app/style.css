@@ -12,6 +12,7 @@
     padding: 10px;
     border-radius: 10px;
     margin: 5px 0;
+    color: #000000;
 }
 
 .bot-message {
@@ -19,6 +20,7 @@
     padding: 10px;
     border-radius: 10px;
     margin: 5px 0;
+    color: #000000;
 }
 
 #ca2885be, #f9731694 {
@@ -62,4 +64,9 @@ h4 {
     display: flex;
     text-align: center;
     background-color: #e28255;
+}
+
+textarea.st-ae {
+    background-color: #ffffff;
+    color: #000000;
 }

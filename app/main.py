@@ -1,5 +1,4 @@
 import streamlit as st
-from utils import hash_password
 from ia_module import get_chat_response
 
 # Configurações da página
@@ -32,6 +31,7 @@ with st.container():
 
 # Caixa de perguntas do usuário.
 prompt = st.chat_input("Digite algo para conversar com o bot:")
+
 if prompt:
     # Adiciona a mensagem do usuário ao contexto
     st.session_state.messages.append({"role": "user", "content": prompt})
